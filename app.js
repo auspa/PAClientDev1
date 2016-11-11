@@ -29,6 +29,8 @@ var server = http.createServer(app);
 
 var io = require('socket.io')(server);
 
+console.log("process.env.PORT: " + process.env.PORT);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
