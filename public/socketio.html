@@ -1,0 +1,45 @@
+<!doctype html>  
+<html lang="en">  
+    <head>
+    	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+		<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+		<script>
+			$( document ).ready(function() {
+				var socket = io.connect('http://localhost:3000');
+				
+				 socket.on('connect', function(data) {
+				    socket.emit('join', 'Hello World from client');
+				 });
+				 socket.on('broad', function(data) {
+				         $('#future').html(data);
+				   });
+		
+				 /*
+				 $('form').submit(function(e){
+				     e.preventDefault();
+				     var message = $('#chat_input').val();
+				     socket.emit('messages', message);
+				 });
+				 */
+				 
+				 $( '#butClick' ).click(function() {
+					 //e.preventDefault();
+				     var message = $('#chat_input').val();
+				     console.log(message);
+				     socket.emit('messages', message);
+				});
+			});
+		
+		
+			
+		</script>
+    </head>
+    <body>
+        <h1>Hello World!</h1>
+        <div id="future"></div>
+        <form id="form" id="chat_form">
+            <input id="chat_input" type="text">
+            <input type="submit" id="butClick" value="Send">
+        </form>
+    </body>
+</html>  

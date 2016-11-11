@@ -10,6 +10,9 @@ var users = require('./routes/users');
 
 var app = express();
 
+var server = require('http').createServer(app);  
+var io = require('socket.io')(server);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -42,5 +45,24 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+app.get('/socketio', function(req, res,next) {  
+    res.sendFile(path.join(__dirname, 'public', 'socketio.html'));
+});
+
+io.on('connection', function(client) {  
+	console.log('Client connected...');
+
+    client.on('join', function(data) {
+        console.log(data);
+    });
+    
+    client.on('messages', function(data) {
+        client.emit('broad', data);
+        client.broadcast.emit('broad',data);
+    });
+});
+
+server.listen(3000); 
 
 module.exports = app;
