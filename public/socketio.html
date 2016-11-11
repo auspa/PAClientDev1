@@ -7,7 +7,7 @@
 			$( document ).ready(function() {
 				//var socket = io.connect('http://paclientdev1.herokuapp.com');
 				var host = location.origin;
-				var socket = io.connect(host, {port: 80, transports: ["websocket"]});
+				var socket = io.connect(host, {transports: ["websocket"]});
 				
 				 socket.on('connect', function(data) {
 				    socket.emit('join', 'Hello World from client');
